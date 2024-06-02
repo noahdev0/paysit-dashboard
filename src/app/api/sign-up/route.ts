@@ -38,3 +38,11 @@ export async function POST(req: Request, res: Response) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+
+export async function GET(req: Request, res: Response) {
+  return NextResponse.json({ message: "Sign in route" }, { status: 405 });
+}
+
+export async function PUT(req: Request, res: Response) {
+  return NextResponse.json({ message: "Sign in route" }, { status: 405 });
+}

@@ -9,7 +9,7 @@ export async function POST(req: Request, res: Response) {
   const data = await req.json();
 
   const { email, password } = data;
-  const user = await User.findOne({ email }).select("+password").exec();
+  const user = await User.findOne({ email }).exec();
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
@@ -17,6 +17,20 @@ export async function POST(req: Request, res: Response) {
   if (!match) {
     return NextResponse.json({ error: "Invalid password" }, { status: 400 });
   }
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!);
-  return NextResponse.json({ token }, { status: 200 });
+  const token = jwt.sign(
+    { id: user._id, name: user.name, role: user.role },
+    process.env.JWT_SECRET!
+  );
+
+  const { password: _, role, ...userWithoutPassword } =  user.toObject();
+
+  return NextResponse.json({ token, userWithoutPassword }, { status: 200 });
+}
+
+export async function GET(req: Request, res: Response) {
+  return NextResponse.json({ message: "Sign in route" }, { status: 405 });
+}
+
+export async function PUT(req: Request, res: Response) {
+  return NextResponse.json({ message: "Sign in route" }, { status: 405 });
 }
