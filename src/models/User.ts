@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
     city: String,
     state: String,
     phoneNumber: String,
@@ -34,4 +38,6 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-export const User = mongoose.models.User || mongoose.model("User", UserSchema);
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
+
+export default User;

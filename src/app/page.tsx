@@ -1,68 +1,60 @@
 /** @format */
-
+"use client";
 import PageTitle from "@/components/PageTitle";
-import Image from "next/image";
 import { DollarSign, Users, CreditCard, Activity } from "lucide-react";
 import Card, { CardContent, CardProps } from "@/components/Card";
 import BarChart from "@/components/BarChart";
 import SalesCard, { SalesProps } from "@/components/SalesCard";
+import { useEffect, useState } from "react";
+import { auth } from "@/auth";
+import { useRouter } from "next/navigation";
 
 const cardData: CardProps[] = [
   {
     label: "Total Revenue",
     amount: "$45,231.89",
     discription: "+20.1% from last month",
-    icon: DollarSign
+    icon: DollarSign,
   },
   {
     label: "Subscriptions",
     amount: "+2350",
     discription: "+180.1% from last month",
-    icon: Users
+    icon: Users,
   },
   {
     label: "Sales",
     amount: "+12,234",
     discription: "+19% from last month",
-    icon: CreditCard
+    icon: CreditCard,
   },
   {
     label: "Active Now",
     amount: "+573",
     discription: "+201 since last hour",
-    icon: Activity
-  }
+    icon: Activity,
+  },
 ];
 
-const uesrSalesData: SalesProps[] = [
-  {
-    name: "Olivia Martin",
-    email: "olivia.martin@email.com",
-    saleAmount: "+$1,999.00"
-  },
-  {
-    name: "Jackson Lee",
-    email: "isabella.nguyen@email.com",
-    saleAmount: "+$1,999.00"
-  },
-  {
-    name: "Isabella Nguyen",
-    email: "isabella.nguyen@email.com",
-    saleAmount: "+$39.00"
-  },
-  {
-    name: "William Kim",
-    email: "will@email.com",
-    saleAmount: "+$299.00"
-  },
-  {
-    name: "Sofia Davis",
-    email: "sofia.davis@email.com",
-    saleAmount: "+$39.00"
-  }
-];
+type Users = {
+  name: string;
+  email: string;
+  balance: string;
+};
 
 export default function Home() {
+  const [users, setUsers] = useState<Users[]>([]);
+
+  useEffect(() => {
+   
+    async function fetchUsers() {
+      const data = await fetch("/api/getUsers").then((res) => res.json());
+      setUsers(data.usersData);
+      console.log(data);
+    }
+    fetchUsers();
+  }, []);
+
   return (
     <div className="flex flex-col gap-5  w-full">
       <PageTitle title="Dashboard" />
@@ -83,21 +75,25 @@ export default function Home() {
 
           <BarChart />
         </CardContent>
-        <CardContent className="flex justify-between gap-4">
+        <CardContent className="flex justify-start gap-4">
           <section>
             <p>Recent Sales</p>
             <p className="text-sm text-gray-400">
               You made 265 sales this month.
             </p>
+            <button className="text-blue-500">View All</button>
           </section>
-          {uesrSalesData.map((d, i) => (
-            <SalesCard
-              key={i}
-              email={d.email}
-              name={d.name}
-              saleAmount={d.saleAmount}
-            />
-          ))}
+
+          <div className="flex flex-col gap-2">
+            {users.map((d, i) => (
+              <SalesCard
+                key={i}
+                email={d.email}
+                name={d.name}
+                balance={d.balance}
+              />
+            ))}
+          </div>
         </CardContent>
 
         {/*  */}

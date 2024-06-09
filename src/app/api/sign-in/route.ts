@@ -1,11 +1,11 @@
-import connectDB from "@/lib/db";
+import dbConnect from "@/lib/db";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { User } from "@/models/User";
+import User from "@/models/User";
 
 export async function POST(req: Request, res: Response) {
-  await connectDB();
+  await dbConnect();
   const data = await req.json();
 
   const { email, password } = data;
@@ -22,7 +22,7 @@ export async function POST(req: Request, res: Response) {
     process.env.JWT_SECRET!
   );
 
-  const { password: _, role, ...userWithoutPassword } =  user.toObject();
+  const { password: _, role, ...userWithoutPassword } = user.toObject();
 
   return NextResponse.json({ token, userWithoutPassword }, { status: 200 });
 }

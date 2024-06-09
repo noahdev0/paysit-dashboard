@@ -11,7 +11,8 @@ import {
   LayoutDashboard,
   UsersRound,
   Settings,
-  ChevronRight
+  ChevronRight,
+  CircleSlash,
 } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -28,7 +29,7 @@ export default function SideNavbar({}: Props) {
   }
 
   return (
-    <div className="relative min-w-[80px] border-r px-3  pb-10 pt-24 ">
+    <div className="relative min-w-[50px] border-r px-3  pb-10 pt-24 ">
       {!mobileWidth && (
         <div className="absolute right-[-20px] top-7">
           <Button
@@ -47,26 +48,32 @@ export default function SideNavbar({}: Props) {
             title: "Dashboard",
             href: "/",
             icon: LayoutDashboard,
-            variant: "default"
+            variant: "default",
           },
           {
             title: "Users",
             href: "/users",
             icon: UsersRound,
-            variant: "ghost"
+            variant: "ghost",
           },
           {
             title: "Ordrs",
             href: "/orders",
             icon: ShoppingCart,
-            variant: "ghost"
+            variant: "ghost",
           },
           {
             title: "Settings",
             href: "/settings",
             icon: Settings,
-            variant: "ghost"
-          }
+            variant: "ghost",
+          },
+          {
+            title: "Logout",
+            href: "/api/auth/signout",
+            icon: CircleSlash,
+            variant: "ghost",
+          },
         ]}
       />
     </div>
