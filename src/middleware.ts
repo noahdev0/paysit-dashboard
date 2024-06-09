@@ -7,6 +7,7 @@ export const config = {
 
 export default auth((req) => {
   const reqUrl = new URL(req.url);
+  console.log(reqUrl);
   if (!req.auth && reqUrl?.pathname !== "/") {
     return NextResponse.redirect(
       new URL(
