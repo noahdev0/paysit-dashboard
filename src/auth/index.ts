@@ -20,7 +20,7 @@ const authOptions: NextAuthConfig = {
           email: "test1@donotreply.com",
         };
 
-        if (user && user.password === credentials.password) {
+        if (user.password === credentials.password) {
           return { id: user.id, name: user.name, email: user.email };
         }
         return null;
