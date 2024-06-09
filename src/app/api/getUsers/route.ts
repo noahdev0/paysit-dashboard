@@ -5,7 +5,7 @@ import User from "@/models/User";
 export async function GET(req: Request, res: Response) {
   await dbConnect();
 
-  const users = await User.find({}).exec();
+  const users = await User.find({});
   const usersData = users.map((user) => {
     return {
       name: user.name,
@@ -15,7 +15,9 @@ export async function GET(req: Request, res: Response) {
       balance: user.balance,
     };
   });
-  return NextResponse.json({ usersData }, { status: 200 });
+  const count = users.length;
+
+  return NextResponse.json({ usersData, count }, { status: 200 });
 }
 
 export async function POST(req: Request, res: Response) {

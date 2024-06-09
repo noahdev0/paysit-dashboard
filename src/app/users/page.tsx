@@ -29,7 +29,6 @@ export default function UsersPage({}: Props) {
     async function fetchUsers() {
       const data = await fetch("/api/getUsers").then((res) => res.json());
       setUsers(data.usersData);
-      console.log(data);
     }
     fetchUsers();
   }, []);

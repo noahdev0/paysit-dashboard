@@ -5,9 +5,21 @@ import { DollarSign, Users, CreditCard, Activity } from "lucide-react";
 import Card, { CardContent, CardProps } from "@/components/Card";
 import BarChart from "@/components/BarChart";
 import SalesCard, { SalesProps } from "@/components/SalesCard";
-import { useEffect, useState } from "react";
-import { auth } from "@/auth";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function SkeletonComp() {
+  return (
+    <div className="flex items-center space-x-4">
+      <Skeleton className="h-12 w-12 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+    </div>
+  );
+}
 
 const cardData: CardProps[] = [
   {
@@ -23,7 +35,7 @@ const cardData: CardProps[] = [
     icon: Users,
   },
   {
-    label: "Sales",
+    label: "Transactions",
     amount: "+12,234",
     discription: "+19% from last month",
     icon: CreditCard,
@@ -35,6 +47,10 @@ const cardData: CardProps[] = [
     icon: Activity,
   },
 ];
+type Data = {
+  count: number;
+  usersData: Users[];
+};
 
 type Users = {
   name: string;
@@ -43,14 +59,12 @@ type Users = {
 };
 
 export default function Home() {
-  const [users, setUsers] = useState<Users[]>([]);
+  const [data, setData] = useState<Data>({ count: 0, usersData: [] });
 
   useEffect(() => {
-   
     async function fetchUsers() {
-      const data = await fetch("/api/getUsers").then((res) => res.json());
-      setUsers(data.usersData);
-      console.log(data);
+      const res = await fetch("/api/getUsers").then((res) => res.json());
+      setData(res);
     }
     fetchUsers();
   }, []);
@@ -77,22 +91,25 @@ export default function Home() {
         </CardContent>
         <CardContent className="flex justify-start gap-4">
           <section>
-            <p>Recent Sales</p>
+            <p>{"Recent signUp's"}</p>
             <p className="text-sm text-gray-400">
-              You made 265 sales this month.
+              total accounts {data.count} this month.
             </p>
-            <button className="text-blue-500">View All</button>
+            <Link href={"/users"} className="text-blue-500">
+              View All
+            </Link>
           </section>
-
           <div className="flex flex-col gap-2">
-            {users.map((d, i) => (
-              <SalesCard
-                key={i}
-                email={d.email}
-                name={d.name}
-                balance={d.balance}
-              />
-            ))}
+            <Suspense fallback={<SkeletonComp/>}>
+              {data?.usersData?.map((d: any, i: number) => (
+                <SalesCard
+                  key={i}
+                  email={d.email}
+                  name={d.name}
+                  balance={d.balance}
+                />
+              ))}
+            </Suspense>
           </div>
         </CardContent>
 
