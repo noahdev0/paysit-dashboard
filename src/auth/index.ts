@@ -12,23 +12,18 @@ const authOptions: NextAuthConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<User | null> {
-        const users = [
-          {
-            id: "test-user-1",
-            userName: "admin",
-            name: "Test 1",
-            password: "admin",
-            email: "test1@donotreply.com",
-          },
-        ];
-        const user = users.find(
-          (user) =>
-            user.userName === credentials.username &&
-            user.password === credentials.password
-        );
-        return user
-          ? { id: user.id, name: user.name, email: user.email }
-          : null;
+        const user = {
+          id: "test-user-1",
+          userName: "admin",
+          name: "Test 1",
+          password: "admin",
+          email: "test1@donotreply.com",
+        };
+
+        if (user && user.password === credentials.password) {
+          return { id: user.id, name: user.name, email: user.email };
+        }
+        return null;
       },
     }),
   ],
