@@ -3,7 +3,6 @@ import { auth, BASE_PATH } from "@/auth";
 
 export default auth((req) => {
   const reqUrl = new URL(req.url);
-  console.log(reqUrl);
   if (!req.auth) {
     return NextResponse.redirect(
       new URL(
@@ -17,4 +16,5 @@ export default auth((req) => {
 });
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  
 };
