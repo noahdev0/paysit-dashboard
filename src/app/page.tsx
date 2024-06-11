@@ -9,18 +9,6 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function SkeletonComp() {
-  return (
-    <div className="flex items-center space-x-4">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
-      </div>
-    </div>
-  );
-}
-
 const cardData: CardProps[] = [
   {
     label: "Total Revenue",
@@ -100,7 +88,7 @@ export default function Home() {
             </Link>
           </section>
           <div className="flex flex-col gap-2">
-            <Suspense fallback={<SkeletonComp/>}>
+            <Suspense fallback={<SkeletonComp />}>
               {data?.usersData?.map((d: any, i: number) => (
                 <SalesCard
                   key={i}
@@ -115,6 +103,18 @@ export default function Home() {
 
         {/*  */}
       </section>
+    </div>
+  );
+}
+
+function SkeletonComp() {
+  return (
+    <div className="flex items-center space-x-4">
+      <Skeleton className="h-12 w-12 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
     </div>
   );
 }
