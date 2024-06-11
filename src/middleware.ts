@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 import { auth, BASE_PATH } from "@/auth";
 
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-};
-
 export default auth((req) => {
   const reqUrl = new URL(req.url);
   console.log(reqUrl);
-  if (!req.auth && reqUrl?.pathname !== "/") {
+  if (!req.auth) {
     return NextResponse.redirect(
       new URL(
         `${BASE_PATH}/signin?callbackUrl=${encodeURIComponent(
@@ -19,3 +15,6 @@ export default auth((req) => {
     );
   }
 });
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
