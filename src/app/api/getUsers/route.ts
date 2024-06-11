@@ -16,6 +16,9 @@ export async function GET(req: Request, res: Response) {
     };
   });
   const count = users.length;
+  if (!users) {
+    return NextResponse.json({ message: "No users found" }, { status: 404 });
+  }
 
   return NextResponse.json({ usersData, count }, { status: 200 });
 }

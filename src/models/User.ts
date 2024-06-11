@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      min: 2,
+      max: 100,
+    },
     name: {
       type: String,
       required: true,

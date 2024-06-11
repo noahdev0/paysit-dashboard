@@ -3,36 +3,15 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
-// @ts-ignore
-let cached = global.mongoose;
-
-if (!cached) {
-  // @ts-ignore
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
 async function dbConnect() {
-  if (cached.conn) {
-    return cached.conn;
+  if (mongoose.connection.readyState >= 1) {
+    return;
   }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
-      return mongoose;
-    });
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined");
   }
-
-  cached.conn = await cached.promise;
-  return cached.conn;
+  console.log("Connecting to MongoDB");
+  return mongoose.connect(process.env.MONGODB_URI!);
 }
 
 export default dbConnect;

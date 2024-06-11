@@ -11,7 +11,7 @@ const authOptions: NextAuthConfig = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials): Promise<User | null> {
+      async authorize(credentials): Promise<User | any> {
         const user = {
           id: "test-user-1",
           userName: "admin",
@@ -23,7 +23,7 @@ const authOptions: NextAuthConfig = {
         if (user.password === credentials.password) {
           return { id: user.id, name: user.name, email: user.email };
         }
-        return null;
+        return { message: "Invalid credentials" };
       },
     }),
   ],

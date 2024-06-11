@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
 export async function POST(req: Request, res: Response) {
-  await dbConnect();
   const data = await req.json();
+  await dbConnect();
 
   const {
     name,
@@ -30,11 +30,12 @@ export async function POST(req: Request, res: Response) {
     phoneNumber,
     role,
   });
+
   try {
     await user.save();
     return NextResponse.json({ message: user }, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error) {
+    return NextResponse.json({ message: error }, { status: 400 });
   }
 }
 
