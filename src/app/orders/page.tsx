@@ -30,7 +30,7 @@ type Payment = {
 const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "order",
-    header: "Order"
+    header: "Order",
   },
   {
     accessorKey: "status",
@@ -41,22 +41,22 @@ const columns: ColumnDef<Payment>[] = [
           className={cn("font-medium w-fit px-4 py-2 rounded-lg", {
             "bg-red-200": row.getValue("status") === "Pending",
             "bg-orange-200": row.getValue("status") === "Processing",
-            "bg-green-200": row.getValue("status") === "Completed"
+            "bg-green-200": row.getValue("status") === "Completed",
           })}
         >
           {row.getValue("status")}
         </div>
       );
-    }
+    },
   },
   {
     accessorKey: "lastOrder",
-    header: "Last Order"
+    header: "Last Order",
   },
   {
     accessorKey: "method",
-    header: "Method"
-  }
+    header: "Transaction ",
+  },
 ];
 
 const data: Payment[] = [
@@ -64,92 +64,92 @@ const data: Payment[] = [
     order: "ORD001",
     status: "Pending",
     lastOrder: "2023-01-15",
-    method: "Credit Card"
+    method: "Air-algerie",
   },
   {
     order: "ORD002",
     status: "Processing",
     lastOrder: "2023-02-20",
-    method: "PayPal"
+    method: "Bank transfer",
   },
   {
     order: "ORD003",
     status: "Completed",
     lastOrder: "2023-03-10",
-    method: "Stripe"
+    method: "Tickets",
   },
   {
     order: "ORD004",
     status: "Pending",
     lastOrder: "2023-04-05",
-    method: "Venmo"
+    method: "Pay",
   },
   {
     order: "ORD005",
     status: "Completed",
     lastOrder: "2023-05-12",
-    method: "Bank Transfer"
+    method: "Bank Transfer",
   },
   {
     order: "ORD006",
     status: "Processing",
     lastOrder: "2023-06-18",
-    method: "Apple Pay"
+    method: "Dahabia",
   },
   {
     order: "ORD007",
     status: "Completed",
     lastOrder: "2023-07-22",
-    method: "Google Pay"
+    method: "Top Up",
   },
   {
     order: "ORD008",
     status: "Pending",
     lastOrder: "2023-08-30",
-    method: "Cryptocurrency"
+    method: "Algerie Poste",
   },
   {
     order: "ORD009",
     status: "Processing",
     lastOrder: "2023-09-05",
-    method: "Alipay"
+    method: "Alipay",
   },
   {
     order: "ORD010",
     status: "Completed",
     lastOrder: "2023-10-18",
-    method: "WeChat Pay"
+    method: "Algerie telecom",
   },
   {
     order: "ORD011",
     status: "Pending",
     lastOrder: "2023-11-25",
-    method: "Square Cash"
+    method: "Pay",
   },
   {
     order: "ORD012",
     status: "Completed",
     lastOrder: "2023-12-08",
-    method: "Zelle"
+    method: "Post Office",
   },
   {
     order: "ORD013",
     status: "Processing",
     lastOrder: "2024-01-15",
-    method: "Stripe"
+    method: "Dahabia",
   },
   {
     order: "ORD014",
     status: "Completed",
     lastOrder: "2024-02-20",
-    method: "PayPal"
+    method: "Dahabia",
   },
   {
     order: "ORD015",
     status: "Pending",
     lastOrder: "2024-03-30",
-    method: "Credit Card"
-  }
+    method: "Credit Card",
+  },
 ];
 
 export default function OrdersPage({}: Props) {

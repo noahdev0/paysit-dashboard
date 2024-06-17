@@ -78,7 +78,7 @@ export default function BarChart({}: Props) {
           axisLine={false}
           stroke="#232132"
           fontSize={12}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={(value) => `DA${value}`}
         />
         <Bar dataKey={"total"} radius={[4, 4, 0, 0]} />
       </BarGraph>

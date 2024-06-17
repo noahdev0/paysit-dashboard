@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const cardData: CardProps[] = [
   {
     label: "Total Revenue",
-    amount: "$45,231.89",
+    amount: " DA 45,231.89",
     discription: "+20.1% from last month",
     icon: DollarSign,
   },
@@ -89,14 +89,17 @@ export default function Home() {
           </section>
           <div className="flex flex-col gap-2">
             <Suspense fallback={<SkeletonComp />}>
-              {data?.usersData?.map((d: any, i: number) => (
-                <SalesCard
-                  key={i}
-                  email={d.email}
-                  name={d.name}
-                  balance={d.balance}
-                />
-              ))}
+              {data?.usersData
+                ?.slice(0, 10)
+                .reverse()
+                .map((d: any, i: number) => (
+                  <SalesCard
+                    key={i}
+                    email={d.email}
+                    name={d.name}
+                    balance={d.balance}
+                  />
+                ))}
             </Suspense>
           </div>
         </CardContent>

@@ -28,7 +28,7 @@ export default function UsersPage({}: Props) {
   useEffect(() => {
     async function fetchUsers() {
       const data = await fetch("/api/getUsers").then((res) => res.json());
-      setUsers(data.usersData);
+      setUsers(data.usersData.reverse());
       console.log(data);
     }
     fetchUsers();
